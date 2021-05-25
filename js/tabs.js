@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+export default function tabs () {
     const tabsHandlerElems = document.querySelectorAll('[data-tabs-handler]');
     const tabsFieldElems = document.querySelectorAll('[data-tabs-field]');
 
@@ -20,4 +20,4 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         })
     }
-});
+};

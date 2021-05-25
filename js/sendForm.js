@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+
     //XMLHTTPREQUEST
     const server = 'https://jsonplaceholder.typicode.com/posts';
 
@@ -18,39 +18,61 @@ document.addEventListener('DOMContentLoaded', () => {
         request.send(data);
     }
 
-    const formElems = document.querySelectorAll('.form');
+    
     const formHandler = (form) => {
+        const smallElem = document.createElement('small');
+        form.append(smallElem)
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             const data = {};
+            let flag = true;
 
-            for (const {
-                    name,
-                    value
-                } of form.elements) {
+            const buttonSubmit = document.querySelector('.button[type="submit"]');
+
+            for (const elem of form.elements) {
+                const {name, value} = elem;
                 if (name) {
-                    data[name] = value
+                    if (value.trim()) {
+                        elem.style.border = '';
+                        data[name] = value.trim();
+                    } else {
+                        elem.style.border = 'red 1px solid';
+                        smallElem.style.color = 'red';
+                        flag = false;
+                        elem.value = '';
+                    }
+                    
                 }
             }
-            const smallElem = document.createElement('small');
+
+            if (!flag) {
+                return smallElem.textContent = `Заполните все поля формы`;
+            }
 
             sendData(JSON.stringify(data),
                 (id) => {
                     smallElem.textContent = `Заявка №${id} принята`;
                     smallElem.style.color = 'green';
-                    form.append(smallElem)
+                    buttonSubmit.disabled = true;
+
+                    setTimeout(() => {
+                        smallElem.textContent = '';
+                        buttonSubmit.disabled = false;
+                    }, 5000);
                 },
                 (err) => {
                     smallElem.textContent = 'Техническая заминка... Пробуйте похже';
                     smallElem.style.color = 'red';
-                    form.append(smallElem)
                 });
 
             form.reset(); // очистка формы
         })
     }
 
-    formElems.forEach(formHandler);
+    export default function sendForm () {
+        const formElems = document.querySelectorAll('.form');
+        formElems.forEach(formHandler);
+    }
+    
 
 
-});

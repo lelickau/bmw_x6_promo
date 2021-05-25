@@ -1,7 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
-    
-});
-
 // const moreElems = document.querySelectorAll('.more');
 // const modalElem = document.querySelector('.modal');
 
@@ -20,18 +16,20 @@ document.addEventListener('DOMContentLoaded', () => {
 //     moreElems.forEach(moreElem => {
 //         moreElem.addEventListener('click', openModal);
 //     });
-    
+
 //     modalElem.addEventListener('click', (e) => {
 //         const target = e.target;
 //         if(target.classList.contains('overlay') || target.classList.contains('modal__close')) closeModal();
 //     })
 
 
-    // вариант с помощью делигирования
+// вариант с помощью делигирования
+import scroll from './scroll.js';
+const {disableScroll, enableScroll} = scroll;
 
-const modalElem = document.querySelector('.modal');
-const designBlock = document.querySelector('.design-block');
-
+export default function modal() {
+    const modalElem = document.querySelector('.modal');
+    const designBlock = document.querySelector('.design-block');
     const openModal = () => {
         modalElem.classList.remove('hidden');
         //!import
@@ -42,12 +40,14 @@ const designBlock = document.querySelector('.design-block');
         //!import
         enableScroll();
     }
-    
     designBlock.addEventListener('click', (e) => {
         const target = e.target;
-        if(target.matches('.more')) openModal();
+        if (target.matches('.more')) openModal();
     })
     modalElem.addEventListener('click', (e) => {
         const target = e.target;
-        if(target.classList.contains('overlay') || target.classList.contains('modal__close')) closeModal();
+        if (target.classList.contains('overlay') || target.classList.contains('modal__close')) closeModal();
     })
+}
+
+

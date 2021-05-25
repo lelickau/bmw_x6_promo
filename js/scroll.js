@@ -1,6 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
 
-});
 //блокирует скролл
     const disableScroll = () => {
         document.body.dataset.scrollY = window.scrollY; // высота в данный момент
@@ -21,3 +19,4 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.cssText = '';
         window.scroll({top:document.body.dataset.scrollY});
     }
+export default {disableScroll, enableScroll};
